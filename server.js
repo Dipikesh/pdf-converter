@@ -5,6 +5,7 @@ const morgan = require('morgan');
 app.use(morgan(`dev`));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+require('dotenv').config()
 const path = require('path');
 // const cors = require('cors');
 
@@ -18,9 +19,9 @@ app.use('/', routes);
 app.use(async (req, res, next) => {
   res.status(404).send("Not found");
 });
-
-app.listen(4000,()=> {
-  console.log("Listening on port 4000");
+const port = process.env.PORT ||4000;
+app.listen(port,()=> {
+  console.log("Listening on port ",port);
 })
 
 process.once('SIGUSR2', () => {
@@ -31,8 +32,8 @@ process.on('SIGINT', () => {
   process.exit();
 });
 
-process.on('error', () => {
-  console.log("Asd");
+process.on('UncaughtException', (err) => {
+  console.log("UncaughtException"+err);
   process.exit(1);
 })
 

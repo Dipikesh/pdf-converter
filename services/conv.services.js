@@ -7,23 +7,23 @@ const path = require('path');
 
 // Pipe its output somewhere, like to a file or HTTP response
 // See below for browser usage
-exports.imageConv = (res, file) => {
+exports.imageConv = async(res, file) => {
         const doc = new PDFDocument();
     
         let filePath = file.filename;
         let splitName = filePath.split(".");
         let pdfName = splitName[0];
     const pdfFile = path.join(__dirname, '../', `/output/${pdfName}.pdf`);
-       const pdfStream = fs.createWriteStream(pdfFile);
+       const pdfStream = await fs.createWriteStream(pdfFile);
 
-        doc.image(file.path, {
+       await doc.image(file.path, {
             fit: [500, 500],
             align: 'fit',
             valign: 'center'
         });
 
         // Finalize PDF file
-        doc.pipe(pdfStream);
+        await doc.pipe(pdfStream);
     doc.end();
     
     

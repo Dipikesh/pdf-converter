@@ -17,7 +17,7 @@ async function ImageSubmit(event) {
     return;
   } else {
     window.open(
-      `http://localhost:4000/pdf?fileName=${response.data.data}`,
+      `/pdf?fileName=${response.data.data}`,
       "_blank"
     );
   }
