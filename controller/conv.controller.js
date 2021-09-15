@@ -5,14 +5,15 @@ const fs = require('fs');
 const {imageConv} = require('../services/conv.services')
 exports.convController = async(req, res, next) => {
     try {
-        const imageId = await imageConv(res, req.file);
+        // console.log("contr ",req.files);
+        const imageId = await imageConv(res, req.files);
         // console.log(imageLoc);
         res.status(201).json({ data: imageId });
        
 
     }
     catch (err) {
-        console.error("error in convController" + err);
+        console.error("error in convController " + err);
         res.status(500).json({ message: "Internal Server Error" });
     }
     

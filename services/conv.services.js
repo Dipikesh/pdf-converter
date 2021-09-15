@@ -7,29 +7,41 @@ const path = require('path');
 
 // Pipe its output somewhere, like to a file or HTTP response
 // See below for browser usage
-exports.imageConv = async(res, file) => {
+exports.imageConv = async (res, file) => {
+    try {
         const doc = new PDFDocument();
     
-        let filePath = file.filename;
-        let splitName = filePath.split(".");
-        let pdfName = splitName[0];
-    const pdfFile = path.join(__dirname, '../', `/output/${pdfName}.pdf`);
-       const pdfStream = await fs.createWriteStream(pdfFile);
+        // let filePath = file.filename;
+        // let splitName = filePath.split(".");
+        // console.log("gh",file[0].fieldname);
+        let pdfName = file[0].fieldname + '_' + Date.now();
+        const pdfFile = path.join(__dirname, '../', `/output/${pdfName}.pdf`);
+        const pdfStream = await fs.createWriteStream(pdfFile);
 
-       await doc.image(file.path, {
+  
+        await doc.image(file[0].path, {
             fit: [500, 500],
-            align: 'fit',
+            align: 'center',
             valign: 'center'
         });
+    
+        // for (var l = 0; l<file.length; l++) {}
+        await file.slice(1).forEach(async function (el) {
+            // console.log("path  ..",el.path,"da ",el.data);
+            await doc.addPage().image(el.path, { fit: [500, 500], align: 'center', valign: 'center' })
+        })
 
         // Finalize PDF file
         await doc.pipe(pdfStream);
-    doc.end();
+        doc.end();
     
     
           
-    // HERE PDF FILE IS DONE
+        // HERE PDF FILE IS DONE
         return `${pdfName}.pdf`;
+    } catch (err) {
+        console.log("pdfservice ...",err);
+    }
 
         
     

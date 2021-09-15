@@ -7,11 +7,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 require('dotenv').config()
 const path = require('path');
-// const cors = require('cors');
+const cors = require('cors');
 
 express.static(path.join(__dirname, '/public'));
 
 const routes = require('./routes.js');
+
+// app.use(cors())
 // app.use(static);
 
 app.use('/', routes);

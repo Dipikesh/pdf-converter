@@ -1,10 +1,14 @@
 console.log("hello");
 async function ImageSubmit(event) {
   event.preventDefault();
-
+  const len = event.target.image.files.length;
+  console.log("event",event.target.image.files.length);
   var bodyFormData = new FormData();
-  let img = event.target.image.files[0];
-  bodyFormData.append("image", img);
+
+  for(let l = 0; l < len; l++) {
+    bodyFormData.append("image",event.target.image.files[l]);
+  }
+ 
 
   const response = await axios({
     method: "post",
