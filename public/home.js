@@ -15,7 +15,10 @@ async function ImageSubmit(event) {
     url: "/convert",
     data: bodyFormData,
     headers: { "Content-Type": "multipart/form-data" },
+    setTimeout:{timeout:2000}
   });
+// const response = await axios.post("/convert",{data:bodyFormData},{})
+
   if (response.data.message !== undefined) {
     alert(response.data.message);
     return;
