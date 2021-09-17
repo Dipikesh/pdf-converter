@@ -17,6 +17,7 @@ const routes = require('./routes.js');
 // app.use(static);
 
 app.use('/', routes);
+
 // process.kill(process.pid);
 app.use(async (req, res, next) => {
   res.status(404).send("Not found");

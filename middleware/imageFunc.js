@@ -5,7 +5,7 @@ module.exports.imageUpload  =
     multer({
         storage: imageStorage,
         limits: {
-            fileSize: 10000000 // 1000000 Bytes = 1 MB
+		fileSize: 30000000 // 1000000 Bytes = 1 MB
         },
         fileFilter(req, file, cb) {
             if (!file.originalname.match(/\.(png|jpg)$/)) {
