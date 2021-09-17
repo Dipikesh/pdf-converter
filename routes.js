@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 });
 
 // imageUpload.single('image')
-router.post('/convert', imageUpload.array('image', 4), convController);
+router.post('/convert', imageUpload.array('image', 20), convController);
 // router.post('/convert', (req, res) => {
 //     console.log("res file ",req);
 // });
