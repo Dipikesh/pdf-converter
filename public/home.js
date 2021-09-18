@@ -1,29 +1,35 @@
 console.log("hello");
 
-uploadImage = async(data) => {
-  const url = "/convert";
-  var config = {
-    onUploadProgress: (progressEvent) => {
-      var percentCompleted = Math.round(
-        (progressEvent.loaded * 100) / progressEvent.total
-      );
-      // appends(percentCompleted);
-      console.log("process",percentCompleted);
-      document.getElementById("load").innerHTML = percentCompleted;
-    },
-  };
-
-  const response = await axios.post(
-    url, data, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-    config,
-  });
+uploadImage = async (data) => {
+  
+    const url = "/convert";
+    var config = {
+      onUploadProgress: (progressEvent) => {
+        var percentCompleted = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total
+        );
+        // appends(percentCompleted);
+        console.log("process", percentCompleted);
+        document.getElementById("load").innerHTML = percentCompleted;
+      },
+    };
+try{
+    const response = await axios.post(
+      url, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      config,
+    });
 
   
 
-  return response;
+    return response;
+  }
+catch (err) {
+
+    alert("")
+  }
 }
 validateImage = async(event) => {
   const len = event.target.image.files.length;
@@ -51,12 +57,8 @@ console.log(bodyFormData);
     return;
   }
   const response = await uploadImage(bodyFormData);
-console.log(response);
+ if(response){
 
-  if (response.data.message !== undefined) {
-    alert(response.data.message);
-    return;
-  } else {
     window.open(`/pdf?fileName=${response.data.data}`, "_blank");
   }
 }
