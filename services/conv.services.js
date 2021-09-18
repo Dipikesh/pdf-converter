@@ -2,6 +2,7 @@ const PDFDocument = require('pdfkit');
 const fs = require('fs');
 const multer = require('multer')
 const path = require('path');
+const createError = require('http-errors');
 
 // Create a document
 
@@ -40,7 +41,8 @@ exports.imageConv = async (res, file) => {
         // HERE PDF FILE IS DONE
         return `${pdfName}.pdf`;
     } catch (err) {
-        console.log("pdfservice ...",err);
+        console.log("pdfservice ...", err);
+        return createError.InternalServerError();
     }
 
         

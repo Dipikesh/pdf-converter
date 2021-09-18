@@ -2,6 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const fsPromises = fs.promises;
 const {imageConv} = require('../services/conv.services')
 exports.convController = async(req, res, next) => {
     try {
@@ -22,24 +23,29 @@ exports.convController = async(req, res, next) => {
 }
 
 exports.getPdfController = async(req, res, next) => {
- 
-    const fileName = req.query.fileName;
+    try {
+        console.log("get ");
+        const fileName = req.query.fileName;
   
-    const pdfPath = path.join(__dirname, '../', `output/${fileName}`);
+        const pdfPath = path.join(__dirname, '../', `output/${fileName}`);
     
-const dirCheck =  fs.access(pdfPath, function(error) {
-  if (error) {
-      res.status(404).json({ message: "Not Found, try again" });
-      return;
-  } else {
-    console.log("sdf",pdfPath);
-        res.set('Content-Type','application/pdf');
-         res.sendFile(pdfPath);
-  }
-})
-        
+    
+        const dirError = await fsPromises.access(pdfPath);
+        if (dirError) {
+            console.log("dir"+dirError);
+            
+             res.status(404).json({ message:"Pdf Not Found"});
+        }
+        // obs_clean();
+        // flush();
+        // res.header('Content-Type', 'application/pdf');
+        // res.header("Content-Disposition:attachment;filename='downloaded.pdf'"); 
+             res.status(200).sendFile(pdfPath);
   
-    
+    }
+    catch (err) {
+        res.status(404).json({ message: "Image Not Found" });
+    }
     
 }
 
