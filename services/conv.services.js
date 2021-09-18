@@ -13,7 +13,7 @@ exports.imageConv = async (res, file) => {
     
         // let filePath = file.filename;
         // let splitName = filePath.split(".");
-        console.log("gh",file[0].fieldname);
+        console.log("gh",file[0].path);
         let pdfName = file[0].fieldname + '_' + Date.now();
         const pdfFile = path.join(__dirname, '../', `/output/${pdfName}.pdf`);
         const pdfStream = await fs.createWriteStream(pdfFile);

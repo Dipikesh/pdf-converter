@@ -1,12 +1,31 @@
 console.log("hello");
-async function ImageSubmit(event) {
-  event.preventDefault();
-  const len = event.target.image.files.length;
+async function validateImage(event) {
+const len = event.target.image.files.length;
   console.log("images",event.target.image.files.length);
   var bodyFormData = new FormData();
 
-  for(let l = 0; l < len; l++) {
-    bodyFormData.append("image",event.target.image.files[l]);
+  for (let l = 0; l < len; l++) {
+    var fileName = event.target.image.files[l].name
+    if (!fileName.match(/\.(png|jpg)$/)) {
+
+      return false;
+    }
+      
+    bodyFormData.append("image", event.target.image.files[l]);
+    
+   
+  }
+   return bodyFormData;
+  
+  
+}
+async function ImageSubmit(event) {
+  event.preventDefault();
+
+  const bodyFormData = await validateImage(event);
+  if (!bodyFormData) {
+    alert("Please Upload jpg or png File");
+    return;
   }
   
   var config = {

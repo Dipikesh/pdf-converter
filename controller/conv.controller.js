@@ -5,7 +5,8 @@ const fs = require('fs');
 const {imageConv} = require('../services/conv.services')
 exports.convController = async(req, res, next) => {
     try {
-        // console.log("contr ",req.files);
+
+      
         const imageId = await imageConv(res, req.files);
         // console.log(imageLoc);
         res.status(201).json({ data: imageId });
@@ -44,5 +45,12 @@ const dirCheck =  fs.access(pdfPath, function(error) {
 
 exports.staticController = async(req, res, next) => {
     const staticPath = path.join(__dirname, '../', '/public/home.js');
-    res.sendFile(staticPath);
+    res.status(200).sendFile(staticPath);
+}
+
+exports.favController = async (req, res, next) => {
+    //  console.log(__dirname);
+    const staticPath = path.join(__dirname, '../', '/public/icons8-document-100.png');
+
+    res.status(200).send(staticPath);
 }

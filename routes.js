@@ -1,5 +1,5 @@
 const router = require('express')();
-const { convController, getPdfController, staticController,} = require('./controller/conv.controller');
+const { convController, getPdfController, staticController,favController} = require('./controller/conv.controller');
 const { imageUpload } = require('./middleware/imageFunc');
 const path = require('path');
 let staticPath = path.join(__dirname, './')
@@ -9,16 +9,13 @@ let staticPath = path.join(__dirname, './')
 
 
 
-
+router.get('/favicon.ico', favController);
 router.get('/', (req, res) => {
     res.sendFile(staticPath+'public/home.html');
 });
 
-// imageUpload.single('image')
 router.post('/convert', imageUpload.array('image', 20), convController);
-// router.post('/convert', (req, res) => {
-//     console.log("res file ",req);
-// });
+
 
 router.get('/pdf', getPdfController);
 router.get('/public', staticController);
