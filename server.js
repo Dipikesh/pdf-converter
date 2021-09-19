@@ -18,12 +18,21 @@ const path = require('path');
 const routes = require('./routes.js');
 
 express.static(path.join(__dirname, '/public'));
-
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 app.use('/', routes);
 
 // process.kill(process.pid);
 app.use(async (req, res, next) => {
   res.status(404).send("Not found");
+});
+app.use(async(err, req, res, next)=> {
+  console.log("Errrrrr", err);
+  res.status(400);
+  res.send(err.message);
 });
 const port = process.env.PORT ||4000;
 app.listen(port,()=> {

@@ -14,7 +14,14 @@ router.get('/', (req, res) => {
     res.sendFile(staticPath+'public/home.html');
 });
 
-router.post('/convert', imageUpload.array('image', 14), convController);
+router.post('/convert', imageUpload.array('image', 20),convController);
+
+//     (req, res) => {
+//     res.send("okay")
+// },
+//     (err, req, res, next) => {
+//         next(err);
+// });
 
 
 router.get('/pdf', getPdfController);

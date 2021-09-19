@@ -51,7 +51,8 @@ exports.imageConv = async (res, file) => {
 
 exports.imageStorage = multer.diskStorage({
     // Destination to store image     
-    destination: './images', 
+    destination: './images',
+
       filename: (req, file, cb) => {
           cb(null, file.fieldname + '_' + Date.now() 
              + path.extname(file.originalname))

@@ -3,32 +3,36 @@ console.log("hello");
 uploadImage = async (data) => {
   
     const url = "/convert";
-    var config = {
-      onUploadProgress: (progressEvent) => {
-        var percentCompleted = Math.round(
-          (progressEvent.loaded * 100) / progressEvent.total
-        );
-        // appends(percentCompleted);
-        console.log("process", percentCompleted);
-        document.getElementById("load").innerHTML = percentCompleted;
-      },
-    };
+    // var config = {
+    //   onUploadProgress: (progressEvent) => {
+    //     var percentCompleted = Math.round(
+    //       (progressEvent.loaded * 100) / progressEvent.total
+    //     );
+    //     // appends(percentCompleted);
+    //     console.log("process");
+    //     document.getElementById("load").innerHTML = "Uploading";
+    //   },
+    // };
 try{
     const response = await axios.post(
       url, data, {
       headers: {
         "Content-Type": "multipart/form-data",
-      },
-      config,
+        },
+        onUploadProgress (progressEvent) {
+          console.log({ progressEvent });
+          document.getElementById("load").innerHTML = "Uploading"
+  }
     });
+  
+  console.log("res",response);
 
   
 
     return response;
   }
 catch (err) {
-
-    alert("")
+    alert("Image Limit or size exceeded")
   }
 }
 validateImage = async(event) => {

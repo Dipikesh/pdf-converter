@@ -1,5 +1,7 @@
+
 const multer = require('multer');
-const {imageStorage} = require('../services/conv.services');
+const { imageStorage } = require('../services/conv.services');
+const createError = require('http-errors');
 
 module.exports.imageUpload  =
     multer({
@@ -11,10 +13,11 @@ module.exports.imageUpload  =
            
             if (!file.originalname.match(/\.(png|jpg)$/)) {
                 // upload only png and jpg format
-                return cb(new Error('Please upload a Image'))
+                
+                return cb(createError.BadRequest('Please upload a Image'))
+                // res.status(400).json({message: 'Please upload a Image'})
             }
             cb(undefined, true)
         }
     })
   
-
