@@ -1,18 +1,9 @@
 console.log("hello");
-
+const compress = require("compress");
 uploadImage = async (data) => {
   
     const url = "/convert";
-    // var config = {
-    //   onUploadProgress: (progressEvent) => {
-    //     var percentCompleted = Math.round(
-    //       (progressEvent.loaded * 100) / progressEvent.total
-    //     );
-    //     // appends(percentCompleted);
-    //     console.log("process");
-    //     document.getElementById("load").innerHTML = "Uploading";
-    //   },
-    // };
+   
 try{
     const response = await axios.post(
       url, data, {
