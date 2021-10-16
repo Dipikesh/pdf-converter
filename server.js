@@ -1,8 +1,10 @@
 const express = require('express');
 const app = express();
 const multer = express('multer');
-// const morgan = require('morgan');
-// app.use(morgan(`dev`));
+const morgan = require('morgan');
+const compression = require('compression');
+app.use(compression());
+app.use(morgan(`dev`));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 require('dotenv').config()

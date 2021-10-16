@@ -11,12 +11,14 @@ module.exports.imageUpload  =
         },
         fileFilter(req, file, cb) {
            
-            if (!file.originalname.match(/\.(png|jpg)$/)) {
+            if (!file.mimeType === 'image/jpeg'|| !file.mimeType === 'image/png' || !file.mimeType === 'image/jpg') {
                 // upload only png and jpg format
-                
+                console.log('upload only png and jpg format',file);
                 return cb(createError.BadRequest('Please upload a Image'))
                 // res.status(400).json({message: 'Please upload a Image'})
             }
+            console.log("file properties middleware ", file);
+  
             cb(undefined, true)
         }
     })

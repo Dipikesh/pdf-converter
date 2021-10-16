@@ -11,14 +11,16 @@ const createError = require('http-errors');
 exports.imageConv = async (res, file) => {
     try {
         const doc = new PDFDocument();
-    
-        // let filePath = file.filename;
-        // let splitName = filePath.split(".");
-        console.log("gh",file[0].path);
-        let pdfName = file[0].fieldname + '_' + Date.now();
+        if (!file) 
+            throw createError(400, "Please upload a file");
+        console.log("file properties ",file);
+        
+        let pdfName = file[0].filename + '_' + Date.now();
         const pdfFile = path.join(__dirname, '../', `/output/${pdfName}.pdf`);
         const pdfStream = await fs.createWriteStream(pdfFile);
+        
 
+        console.log("FILE NAME PATH ..", file[0].path);
   
         await doc.image(file[0].path, {
             fit: [500, 500],
@@ -26,9 +28,10 @@ exports.imageConv = async (res, file) => {
             valign: 'center'
         });
     
-        // for (var l = 0; l<file.length; l++) {}
+   
         await file.slice(1).forEach(async function (el) {
-            // console.log("path  ..",el.path,"da ",el.data);
+        
+
             await doc.addPage().image(el.path, { fit: [500, 500], align: 'center', valign: 'center' })
         })
 
@@ -42,7 +45,7 @@ exports.imageConv = async (res, file) => {
         return `${pdfName}.pdf`;
     } catch (err) {
         console.log("pdfservice ...", err);
-        return createError.InternalServerError();
+        throw createError.InternalServerError();
     }
 
         
