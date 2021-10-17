@@ -3,6 +3,9 @@ const app = express();
 const multer = express('multer');
 const morgan = require('morgan');
 const compression = require('compression');
+const cors = require('cors')
+
+app.use(cors());
 app.use(compression());
 app.use(morgan(`dev`));
 app.use(express.json());
@@ -17,11 +20,12 @@ const path = require('path');
 const routes = require('./routes.js');
 
 express.static(path.join(__dirname, '/public'));
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
+
 app.use('/', routes);
 
 // process.kill(process.pid);
