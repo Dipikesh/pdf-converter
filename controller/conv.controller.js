@@ -32,7 +32,7 @@ exports.getPdfController = async (req, res, next) => {
       res.status(404).json({ message: "Pdf Not Found" });
     }
 
-    res.status(200).sendFile(pdfPath);
+    res.status(200).download(pdfPath);
   } catch (err) {
     res.status(404).json({ message: "Image Not Found" });
   }
