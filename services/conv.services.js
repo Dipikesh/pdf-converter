@@ -15,7 +15,7 @@ exports.imageConv = async (res, file) => {
             throw createError(400, "Please upload a file");
         console.log("file properties ",file);
         
-        let pdfName = file[0].filename + '_' + Date.now();
+        let pdfName = file[0].fieldname + '_' + Date.now();
         const pdfFile = path.join(__dirname, '../', `/output/${pdfName}.pdf`);
         const pdfStream = await fs.createWriteStream(pdfFile);
         

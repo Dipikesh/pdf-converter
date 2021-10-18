@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
     res.sendFile(staticPath+'public/home.html');
 });
 
-router.post('/convert', imageUpload.array('image', 20),convController);
+router.post('/convert', imageUpload.array('file', 20),convController);
 
 
 
