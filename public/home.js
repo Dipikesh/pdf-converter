@@ -17,7 +17,12 @@ uploadImage = async (data) => {
 
     return response;
   } catch (err) {
-    alert(" AXIOS Image Limit or size exceeded"+ err);
+    if (err.status === 500) alert("Internal server error");
+    else if (err.status === 400) alert("Upload Image with limited size");
+    else {
+      alert("Something went wrong, try again");
+    }
+    
   }
 };
 
@@ -74,7 +79,7 @@ handleImageUpload = async(imageFile, bodyFormData) => {
         console.log("compressed file", compressedFile);
 
         // write your own logic
-        bodyFormData.append("image", compressedFile);
+        bodyFormData.append("file", compressedFile);
         console.log("bodyFormData", bodyFormData.entries())
         return;
         
